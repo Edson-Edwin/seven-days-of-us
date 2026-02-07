@@ -4,26 +4,50 @@ import DayLayout from "@/components/DayLayout";
 import TypewriterText from "@/components/TypewriterText";
 import { Button } from "@/components/ui/button";
 import FloatingHearts from "@/components/FloatingHearts";
+import { toast } from "sonner";
+import { sendEmail } from "@/lib/email";
 
-const LETTER = `From the moment I met you, I knew my life was about to change forever. You weren't just a person — you were the answer to a prayer I didn't know I had whispered.
-
-If I could go back in time and stand at that altar again, I wouldn't change a single thing. I'd say yes. I'd say yes a thousand times.
-
-You are my forever, my always, and my everything.
-
-Will you let me keep loving you... forever? 💍`;
+const LETTER = `എടി പൊന്നി ,എനിക്ക് പ്രൊപ്പോസ് ചെയ്യാൻ ഒന്നും അറിയില്ല എന്നാലും ഞാൻ ട്രൈ ചെയ്യാം ....
+എന്റെ ലൈഫിൽ എനിക്ക് നിന്നോട് തോന്നുന്ന അത്രയും പ്രാന്തും ,സ്നേഹവും ,എല്ലാം ഇതുവരെ ഒരു മനുഷ്യരോടും  തോന്നിയിട് ഇല്ല...നീ എന്റെ അടുത് ഇല്ലാത്തപ്പോൾ ഒക്കെ എനിക്ക് ഭയങ്കര വിഷമം ആണ്....നീ എന്നെ കൊറേ സ്നേഹിക്കുന്നുണ്ടെന്ന് എനിക്ക് അറിയാം.സത്യം പറഞ്ഞാൽ നമ്മടെ അടി മുഴുവൻ സ്നേഹക്കൂടുതൽ കൊണ്ട് ഉണ്ടാവുന്നതാ...അതോണ്ട് പൊന്നി നീ വേഷമിക്കല്ലേ...ഞാൻ ഇന്നലെ പറഞ്ഞ പോലെ എത്ര അടി ഇട്ടാലും STILL I LOVE YOU 💖. 
+AND HERE COMES THE QUESTION I HAVE TO ASK IN THIS PROPOSAL DAY.WILL YOU MARRY ME.💍 താഴെ NO വെക്കുന്നില്ല കാരണം I ONLY EXPECT YES FROM YOU.`;
 
 export default function Day2Propose() {
   const [showButton, setShowButton] = useState(false);
   const [heartBurst, setHeartBurst] = useState(false);
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
 
   const handleComplete = useCallback(() => {
     setShowButton(true);
   }, []);
 
-  const handleYes = () => {
+  const handleYes = async () => {
     setHeartBurst(true);
     setTimeout(() => setHeartBurst(false), 4000);
+
+    // Send email with "yes" message
+    setIsSendingEmail(true);
+    try {
+      const success = await sendEmail({
+        message: "yes",
+        from_name: "Seven Days of Us",
+      });
+
+      if (success) {
+        toast.success("Email sent! 💌", {
+          description: "Your 'yes' has been sent via email!",
+        });
+      } else {
+        toast.error("Email not configured", {
+          description: "Please set up EmailJS environment variables.",
+        });
+      }
+    } catch (error) {
+      toast.error("Failed to send email", {
+        description: "There was an error sending the email.",
+      });
+    } finally {
+      setIsSendingEmail(false);
+    }
   };
 
   return (
@@ -54,9 +78,10 @@ export default function Day2Propose() {
             >
               <Button
                 onClick={handleYes}
-                className="h-14 px-10 text-lg font-handwritten bg-primary hover:bg-primary/90 rounded-full shadow-lg"
+                disabled={isSendingEmail}
+                className="h-14 px-10 text-lg font-handwritten bg-primary hover:bg-primary/90 rounded-full shadow-lg disabled:opacity-50"
               >
-                I'd say YES again ❤️
+                {isSendingEmail ? "Sending..." : "YES ❤️"}
               </Button>
             </motion.div>
           )}
