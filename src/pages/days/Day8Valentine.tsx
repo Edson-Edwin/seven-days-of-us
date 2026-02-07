@@ -30,7 +30,7 @@ I didn't build this to impress you. I built it because loving you is my favorite
 Forever and always,
 Your [Name]`;
 
-export default function Day7Valentine() {
+export default function Day8Valentine() {
   const [revealed, setRevealed] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
 
