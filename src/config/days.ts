@@ -16,8 +16,9 @@ export const DAYS: DayConfig[] = [
   { day: 3, date: "02-09", title: "Chocolate Day", subtitle: "Sweet moments, sweeter memories", emoji: "🍫", route: "/day/3", color: "from-amber-600 to-orange-400" },
   { day: 4, date: "02-10", title: "Teddy Day", subtitle: "Warm hugs across the distance", emoji: "🧸", route: "/day/4", color: "from-amber-300 to-yellow-400" },
   { day: 5, date: "02-11", title: "Promise Day", subtitle: "Words I'll keep forever", emoji: "🤝", route: "/day/5", color: "from-emerald-400 to-teal-500" },
-  { day: 6, date: "02-12", title: "Kiss Day", subtitle: "Closer than words can say", emoji: "💋", route: "/day/6", color: "from-pink-500 to-red-400" },
-  { day: 7, date: "02-14", title: "Valentine's Day", subtitle: "The grand finale of my love", emoji: "❤️", route: "/day/7", color: "from-red-500 to-rose-600" },
+  { day: 6, date: "02-12", title: "Hug Day", subtitle: "A hug that says everything words cannot", emoji: "🤗", route: "/day/6", color: "from-orange-300 to-amber-400" },
+  { day: 7, date: "02-13", title: "Kiss Day", subtitle: "Closer than ever, even without distance", emoji: "💋", route: "/day/7", color: "from-pink-500 to-red-400" },
+  { day: 8, date: "02-14", title: "Valentine's Day", subtitle: "The grand finale of my love", emoji: "❤️", route: "/day/8", color: "from-red-500 to-rose-600" },
 ];
 
 export function isDayUnlocked(dayIndex: number): boolean {

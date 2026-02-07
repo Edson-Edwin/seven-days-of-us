@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import DayLayout from "@/components/DayLayout";
 
-export default function Day6Kiss() {
+export default function Day7Kiss() {
   const [kisses, setKisses] = useState<{ id: number; x: number; y: number }[]>([]);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -68,7 +68,6 @@ export default function Day6Kiss() {
         >
           <div className="text-5xl mb-4">💋</div>
           <p className="font-display text-foreground italic leading-relaxed">
-            {/* CUSTOMIZE: Your personal message */}
             Some things are better felt than said.
             <br /><br />
             But if I could bottle every kiss I've ever wanted to give you,

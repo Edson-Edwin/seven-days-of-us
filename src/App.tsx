@@ -10,8 +10,9 @@ import Day2Propose from "./pages/days/Day2Propose";
 import Day3Chocolate from "./pages/days/Day3Chocolate";
 import Day4Teddy from "./pages/days/Day4Teddy";
 import Day5Promise from "./pages/days/Day5Promise";
-import Day6Kiss from "./pages/days/Day6Kiss";
-import Day7Valentine from "./pages/days/Day7Valentine";
+import Day6Hug from "./pages/days/Day6Hug";
+import Day7Kiss from "./pages/days/Day7Kiss";
+import Day8Valentine from "./pages/days/Day8Valentine";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,8 +31,9 @@ const App = () => (
           <Route path="/day/3" element={<Day3Chocolate />} />
           <Route path="/day/4" element={<Day4Teddy />} />
           <Route path="/day/5" element={<Day5Promise />} />
-          <Route path="/day/6" element={<Day6Kiss />} />
-          <Route path="/day/7" element={<Day7Valentine />} />
+          <Route path="/day/6" element={<Day6Hug />} />
+          <Route path="/day/7" element={<Day7Kiss />} />
+          <Route path="/day/8" element={<Day8Valentine />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
