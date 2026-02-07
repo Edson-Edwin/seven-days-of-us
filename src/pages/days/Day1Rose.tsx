@@ -34,7 +34,7 @@ export default function Day1Rose() {
               every thorn life throws our way.
             </p>
             <p>
-              You are my garden, my sunshine, and my reason to bloom.
+              എന്റെ പൊന്നേ ,നീ എത്ര അടി ഇട്ടാലും ഞാൻ നിന്നെ സ്നേഹിച്ചോണ്ടേ ....ഇരിക്കും
             </p>
             <p className="text-primary font-semibold">
               I love you more than words could ever say. 🌹
