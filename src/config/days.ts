@@ -1,4 +1,4 @@
-export const PASSWORD = "301125";
+export const PASSWORD = "51125";
 
 export interface DayConfig {
   day: number;
