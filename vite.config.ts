@@ -4,7 +4,7 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: "seven-days-of-us", // ✅ CRITICAL FIX
+  base: "/", // ✅ CRITICAL FIX
   server: {
     host: "::",
     port: 8080,
