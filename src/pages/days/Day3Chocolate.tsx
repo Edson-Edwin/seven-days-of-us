@@ -13,10 +13,10 @@ interface QuizQuestion {
 // CUSTOMIZE: Replace with your own questions and messages
 const QUESTIONS: QuizQuestion[] = [
   {
-    question: "Where did we have our first date?",
-    options: ["A coffee shop", "A movie theater", "A park", "A restaurant"],
-    correct: 0,
-    message: "That little coffee shop where my heart skipped a beat for the first time ☕❤️",
+    question: "Where did we first met?",
+    options: ["A coffee shop", "In a bus", "College", "A restaurant"],
+    correct: 1,
+    message: "We met on a bus, but my heart found its forever journey with you. 🌙🚌❤️",
   },
   {
     question: "What's my favorite thing about you?",
@@ -25,10 +25,10 @@ const QUESTIONS: QuizQuestion[] = [
     message: "Trick question! I can't pick just one — everything about you is perfect 💕",
   },
   {
-    question: "What song reminds me of us?",
-    options: ["Perfect – Ed Sheeran", "All of Me – John Legend", "A Thousand Years", "Tum Hi Ho"],
-    correct: 1,
-    message: "Because you have all of me, and I wouldn't have it any other way 🎵",
+    question: "How much I love you ?",
+    options: ["0%", "10%", "100%", "1000%"],
+    correct: 3,
+    message: "I love you more than anything in the world 🎵",
   },
 ];
 
@@ -136,9 +136,9 @@ export default function Day3Chocolate() {
                 {score === QUESTIONS.length ? "You know me perfectly!" : "Sweet Results!"}
               </h3>
               <p className="font-display text-muted-foreground italic">
-                You got {score} out of {QUESTIONS.length} right!
+                you got {score} out of {QUESTIONS.length} right!
                 <br />
-                But honestly, every answer is right when it's about us ❤️
+                My wife is a killadi..... ❤️
               </p>
             </motion.div>
           )}
