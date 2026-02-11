@@ -26,12 +26,29 @@ const COLORS = [
 
 export default function Day5Promise() {
   const [herPromise, setHerPromise] = useState("");
-  const [savedPromise, setSavedPromise] = useState<string | null>(null);
+  const [savedPromises, setSavedPromises] = useState<string[]>([]);
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem("7dol-her-promise");
-    if (saved) setSavedPromise(saved);
+    // Load multiple promises (new format)
+    const savedList = localStorage.getItem("7dol-her-promises");
+    if (savedList) {
+      try {
+        const parsed = JSON.parse(savedList);
+        if (Array.isArray(parsed)) {
+          setSavedPromises(parsed);
+        }
+      } catch {
+        // ignore parse errors
+      }
+    } else {
+      // Backwards compatibility: migrate single saved promise if it exists
+      const legacy = localStorage.getItem("7dol-her-promise");
+      if (legacy) {
+        setSavedPromises([legacy]);
+        localStorage.setItem("7dol-her-promises", JSON.stringify([legacy]));
+      }
+    }
   }, []);
 
   const handleSave = async () => {
@@ -41,9 +58,10 @@ export default function Day5Promise() {
     setIsSaving(true);
 
     try {
-      // Save locally
-      localStorage.setItem("7dol-her-promise", trimmed);
-      setSavedPromise(trimmed);
+      // Save locally (append to list)
+      const updated = [...savedPromises, trimmed];
+      localStorage.setItem("7dol-her-promises", JSON.stringify(updated));
+      setSavedPromises(updated);
       setHerPromise("");
 
       // Send to your email
@@ -70,9 +88,8 @@ export default function Day5Promise() {
     }
   };
 
-  const allPromises = savedPromise
-    ? [...MY_PROMISES, savedPromise]
-    : MY_PROMISES;
+  const allPromises = [...MY_PROMISES, ...savedPromises];
+  const herStartIndex = MY_PROMISES.length;
 
   return (
     <DayLayout title="Promise Day" emoji="🤝" className="bg-background">
@@ -98,7 +115,7 @@ export default function Day5Promise() {
               <p className="font-body text-sm text-foreground/80 leading-relaxed">
                 {promise}
               </p>
-              {i === allPromises.length - 1 && savedPromise && (
+              {i >= herStartIndex && savedPromises.length > 0 && (
                 <p className="text-xs text-muted-foreground mt-2 italic">
                   — Your promise 💕
                 </p>
@@ -107,35 +124,33 @@ export default function Day5Promise() {
           ))}
         </div>
 
-        {/* Her promise input */}
-        {!savedPromise && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="bg-card rounded-2xl p-5 border border-primary/10 space-y-3"
+        {/* Her promise input – can add more than one */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="bg-card rounded-2xl p-5 border border-primary/10 space-y-3"
+        >
+          <p className="font-handwritten text-xl text-foreground text-center">
+            Your turn, my love 💕
+          </p>
+          <p className="font-display text-xs text-muted-foreground text-center italic">
+            Write me promises — I&apos;ll keep every single one
+          </p>
+          <Input
+            value={herPromise}
+            onChange={(e) => setHerPromise(e.target.value)}
+            placeholder="I promise to..."
+            className="text-center bg-card border-primary/20"
+          />
+          <Button
+            onClick={handleSave}
+            disabled={!herPromise.trim() || isSaving}
+            className="w-full font-handwritten text-lg disabled:opacity-50"
           >
-            <p className="font-handwritten text-xl text-foreground text-center">
-              Your turn, my love 💕
-            </p>
-            <p className="font-display text-xs text-muted-foreground text-center italic">
-              Write me one promise — I'll keep it forever
-            </p>
-            <Input
-              value={herPromise}
-              onChange={(e) => setHerPromise(e.target.value)}
-              placeholder="I promise to..."
-              className="text-center bg-card border-primary/20"
-            />
-            <Button
-              onClick={handleSave}
-              disabled={!herPromise.trim() || isSaving}
-              className="w-full font-handwritten text-lg disabled:opacity-50"
-            >
-              {isSaving ? "Saving..." : "Save My Promise ❤️"}
-            </Button>
-          </motion.div>
-        )}
+            {isSaving ? "Saving..." : "Save My Promise ❤️"}
+          </Button>
+        </motion.div>
       </div>
     </DayLayout>
   );
