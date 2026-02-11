@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import DayLayout from "@/components/DayLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
+import { sendEmail } from "@/lib/email";
 
 // CUSTOMIZE: Replace with your personal promises
 const MY_PROMISES = [
@@ -25,17 +27,46 @@ const COLORS = [
 export default function Day5Promise() {
   const [herPromise, setHerPromise] = useState("");
   const [savedPromise, setSavedPromise] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("7dol-her-promise");
     if (saved) setSavedPromise(saved);
   }, []);
 
-  const handleSave = () => {
-    if (herPromise.trim()) {
-      localStorage.setItem("7dol-her-promise", herPromise.trim());
-      setSavedPromise(herPromise.trim());
+  const handleSave = async () => {
+    const trimmed = herPromise.trim();
+    if (!trimmed) return;
+
+    setIsSaving(true);
+
+    try {
+      // Save locally
+      localStorage.setItem("7dol-her-promise", trimmed);
+      setSavedPromise(trimmed);
       setHerPromise("");
+
+      // Send to your email
+      const success = await sendEmail({
+        message: `Her promise: ${trimmed}`,
+        from_name: "Promise Day",
+      });
+
+      if (success) {
+        toast.success("Promise saved 💌", {
+          description: "Her promise has been sent to his email.",
+        });
+      } else {
+        toast.error("Email not configured", {
+          description: "Please set up EmailJS environment variables.",
+        });
+      }
+    } catch (error) {
+      toast.error("Failed to send email", {
+        description: "There was an error sending the promise to your email.",
+      });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -98,10 +129,10 @@ export default function Day5Promise() {
             />
             <Button
               onClick={handleSave}
-              disabled={!herPromise.trim()}
-              className="w-full font-handwritten text-lg"
+              disabled={!herPromise.trim() || isSaving}
+              className="w-full font-handwritten text-lg disabled:opacity-50"
             >
-              Save My Promise ❤️
+              {isSaving ? "Saving..." : "Save My Promise ❤️"}
             </Button>
           </motion.div>
         )}
